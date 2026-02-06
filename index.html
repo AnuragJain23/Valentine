@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ultimate Valentine ❤️</title>
+
+<style>
+body {
+  margin:0;
+  padding:0;
+  height:100vh;
+  overflow:hidden;
+  font-family:'Segoe UI',sans-serif;
+  background:radial-gradient(circle at bottom,#0a0014,#000);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* 🌌 STARRY SKY */
+.stars {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:url('https://www.transparenttextures.com/patterns/stardust.png');
+  animation:moveStars 60s linear infinite;
+  opacity:.6;
+}
+
+@keyframes moveStars{
+  from{background-position:0 0}
+  to{background-position:10000px 5000px}
+}
+
+/* ✨ SPARK QUESTION */
+.spark-text{
+  position:absolute;
+  top:15%;
+  font-size:clamp(2rem,4vw,3.5rem);
+  color:gold;
+  text-align:center;
+  text-shadow:
+  0 0 5px #fff,
+  0 0 10px #ffd700,
+  0 0 20px #ffae00,
+  0 0 40px #ff7b00,
+  0 0 80px #ff3c00;
+  animation:flicker 1.5s infinite alternate,floatText 3s ease-in-out infinite;
+  padding:0 20px;
+}
+
+@keyframes flicker{0%{opacity:1}50%{opacity:.85}100%{opacity:1}}
+@keyframes floatText{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* 💘 BUTTONS */
+.btn{
+  position:absolute;
+  padding:15px 40px;
+  font-size:1.2rem;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:all .4s ease;
+}
+
+#yesBtn{
+  top:60%;
+  left:35%;
+  background:linear-gradient(45deg,#ff0080,#ff4dd2);
+  color:#fff;
+  box-shadow:0 0 25px #ff4dd2;
+}
+
+#yesBtn:hover{
+  transform:scale(1.3) rotate(-3deg);
+  box-shadow:0 0 50px #ff99ec;
+}
+
+#noBtn{
+  top:60%;
+  left:55%;
+  background:#111;
+  color:#fff;
+  transition:top .6s ease,left .6s ease,transform .3s ease;
+}
+
+/* 💕 FLOATING EMOJIS */
+.emoji{
+  position:fixed;
+  font-size:24px;
+  animation:floatUp linear forwards;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(100vh) scale(.5);opacity:1}
+  to{transform:translateY(-10vh) scale(1.2);opacity:0}
+}
+
+/* 🎆 FINAL SCREEN */
+#finalScreen{
+  display:none;
+  text-align:center;
+  color:#fff;
+  padding:20px;
+  animation:fadeIn 2s ease forwards;
+}
+
+#finalScreen h2{
+  font-size:2.5rem;
+  color:#ff66e0;
+  text-shadow:0 0 20px #ff1ac6;
+}
+
+#finalScreen p{
+  font-size:1.2rem;
+  max-width:700px;
+  margin:20px auto;
+  line-height:1.7;
+  color:#ffd6f7;
+}
+
+#coupleImg{
+  width:220px;
+  height:220px;
+  object-fit:cover;
+  border-radius:20px;
+  margin-top:20px;
+  box-shadow:0 0 40px rgba(255,0,150,.9);
+  border:3px solid #ff66e0;
+}
+
+/* 💍 SECRET BUTTON */
+#marryBtn{
+  display:none;
+  margin-top:25px;
+  padding:12px 28px;
+  font-size:1.1rem;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,#ffd700,#ff9a00);
+  cursor:pointer;
+  box-shadow:0 0 25px gold;
+}
+
+#backBtn{
+  display:block;
+  margin:20px auto 0;
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  background:#222;
+  color:#fff;
+  cursor:pointer;
+}
+
+@keyframes fadeIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+<canvas id="fireworks"></canvas>
+
+<audio autoplay loop>
+  <source src="TumMile.mp3" type="audio/mpeg">
+</audio>
+
+<div class="spark-text">Will You Be My Valentine? ✨</div>
+
+<button id="yesBtn" class="btn">Yes ❤️</button>
+<button id="noBtn" class="btn">No 💔</button>
+
+<div id="finalScreen">
+  <h2>Thank You For Being My Valentine 💖</h2>
+
+  <p>
+    Thank you for being my Valentine for the 4th time since our relationship ❤️
+    <br><br>
+    With every heartbeat, my love for you grows stronger.
+    You are the reason my world feels brighter,
+    my nights feel warmer, and my life feels complete.
+    <br><br>
+    Loving you is my favorite journey…
+    and I want to walk every lifetime with you.
+    <br><br>
+    Here’s to us, our memories, and
+    a forever still waiting to unfold ✨💍
+  </p>
+
+  <img id="coupleImg" src="couple.jpeg" />
+
+  <button id="marryBtn">💍 Marry Me Next?</button>
+  <button id="backBtn">⬅ Back</button>
+</div>
+
+<script>
+
+/* NO MOVE */
+const noBtn=document.getElementById('noBtn');
+noBtn.addEventListener('mouseenter',()=>{
+  noBtn.style.top=Math.random()*80+'%';
+  noBtn.style.left=Math.random()*80+'%';
+});
+
+/* YES CLICK */
+const yesBtn=document.getElementById('yesBtn');
+const finalScreen=document.getElementById('finalScreen');
+
+yesBtn.onclick=()=>{
+ document.querySelector('.spark-text').style.display='none';
+ yesBtn.style.display='none';
+ noBtn.style.display='none';
+ finalScreen.style.display='block';
+ document.getElementById('marryBtn').style.display='inline-block';
+ startFireworks();
+};
+
+/* BACK */
+document.getElementById('backBtn').onclick=()=>location.reload();
+
+/* EMOJIS */
+const emojis=['❤️','💖','💘','💝','💕','💗','💓','💞','😍','🥰'];
+setInterval(()=>{
+ let e=document.createElement('div');
+ e.className='emoji';
+ e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+ e.style.left=Math.random()*100+'vw';
+ e.style.animationDuration=(Math.random()*3+3)+'s';
+ document.body.appendChild(e);
+ setTimeout(()=>e.remove(),6000);
+},400);
+
+/* FIREWORKS */
+function startFireworks(){
+const canvas=document.getElementById('fireworks');
+const ctx=canvas.getContext('2d');
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+let particles=[];
+
+function boom(){
+ let x=Math.random()*canvas.width;
+ let y=Math.random()*canvas.height/2;
+ for(let i=0;i<80;i++){
+  particles.push({x,y,angle:Math.random()*6.28,speed:Math.random()*5+2,life:100});
+ }
+}
+
+function animate(){
+ ctx.fillStyle='rgba(0,0,0,.2)';
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+ particles.forEach((p,i)=>{
+  p.x+=Math.cos(p.angle)*p.speed;
+  p.y+=Math.sin(p.angle)*p.speed;
+  p.life--;
+  ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+  ctx.fillRect(p.x,p.y,3,3);
+  if(p.life<=0)particles.splice(i,1);
+ });
+ requestAnimationFrame(animate);
+}
+
+setInterval(boom,800);
+animate();
+}
+
+</script>
+
+</body>
+</html>
