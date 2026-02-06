@@ -6,162 +6,173 @@
 <title>Ultimate Valentine ❤️</title>
 
 <style>
-body {
+
+/* 🌌 BASE PAGE */
+body{
   margin:0;
-  padding:0;
-  height:100vh;
-  overflow:hidden;
   font-family:'Segoe UI',sans-serif;
   background:radial-gradient(circle at bottom,#0a0014,#000);
+  min-height:100vh;
+  overflow-x:hidden;
   display:flex;
-  justify-content:center;
+  flex-direction:column;
   align-items:center;
+  justify-content:center;
 }
 
-/* 🌌 STARRY SKY */
-.stars {
+/* 🌌 STARS */
+.stars{
   position:fixed;
   width:100%;
   height:100%;
   background:url('https://www.transparenttextures.com/patterns/stardust.png');
   animation:moveStars 60s linear infinite;
   opacity:.6;
+  z-index:-1;
 }
+@keyframes moveStars{from{background-position:0 0}to{background-position:10000px 5000px}}
 
-@keyframes moveStars{
-  from{background-position:0 0}
-  to{background-position:10000px 5000px}
-}
-
-/* ✨ SPARK QUESTION */
+/* ✨ QUESTION */
 .spark-text{
   position:absolute;
-  top:15%;
-  font-size:clamp(2rem,4vw,3.5rem);
-  color:gold;
+  top:10%;
+  width:100%;
   text-align:center;
-  text-shadow:
-  0 0 5px #fff,
-  0 0 10px #ffd700,
-  0 0 20px #ffae00,
-  0 0 40px #ff7b00,
-  0 0 80px #ff3c00;
-  animation:flicker 1.5s infinite alternate,floatText 3s ease-in-out infinite;
-  padding:0 20px;
+  font-size:clamp(2rem,4vw,3rem);
+  color:gold;
+  text-shadow:0 0 10px #ffd700,0 0 30px #ff7b00;
 }
-
-@keyframes flicker{0%{opacity:1}50%{opacity:.85}100%{opacity:1}}
-@keyframes floatText{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 
 /* 💘 BUTTONS */
 .btn{
   position:absolute;
-  padding:15px 40px;
-  font-size:1.2rem;
+  padding:14px 32px;
+  font-size:1.1rem;
   border:none;
   border-radius:50px;
   cursor:pointer;
   font-weight:bold;
-  transition:all .4s ease;
 }
 
-#yesBtn{
-  top:60%;
-  left:35%;
-  background:linear-gradient(45deg,#ff0080,#ff4dd2);
-  color:#fff;
-  box-shadow:0 0 25px #ff4dd2;
-}
-
-#yesBtn:hover{
-  transform:scale(1.3) rotate(-3deg);
-  box-shadow:0 0 50px #ff99ec;
-}
-
-#noBtn{
-  top:60%;
-  left:55%;
-  background:#111;
-  color:#fff;
-  transition:top .6s ease,left .6s ease,transform .3s ease;
-}
-
-/* 💕 FLOATING EMOJIS */
-.emoji{
-  position:fixed;
-  font-size:24px;
-  animation:floatUp linear forwards;
-}
-
-@keyframes floatUp{
-  from{transform:translateY(100vh) scale(.5);opacity:1}
-  to{transform:translateY(-10vh) scale(1.2);opacity:0}
-}
+#yesBtn{top:60%;left:40%;background:linear-gradient(45deg,#ff0080,#ff4dd2);color:#fff}
+#noBtn{top:60%;left:55%;background:#111;color:#fff}
 
 /* 🎆 FINAL SCREEN */
-#finalScreen{
+#finalScreen,#marryScreen{
   display:none;
   text-align:center;
   color:#fff;
-  padding:20px;
-  animation:fadeIn 2s ease forwards;
+  padding:40px 20px 80px;
+  max-width:900px;
 }
 
-#finalScreen h2{
-  font-size:2.5rem;
+#finalScreen h2,#marryScreen h2{
+  font-size:2.6rem;
   color:#ff66e0;
   text-shadow:0 0 20px #ff1ac6;
 }
 
 #finalScreen p{
-  font-size:1.2rem;
-  max-width:700px;
+  font-size:1.25rem;
+  line-height:1.9;
   margin:20px auto;
-  line-height:1.7;
-  color:#ffd6f7;
+  max-width:800px;
 }
 
-#coupleImg{
-  width:220px;
-  height:220px;
-  object-fit:cover;
-  border-radius:20px;
-  margin-top:20px;
-  box-shadow:0 0 40px rgba(255,0,150,.9);
+/* 🔥 GLOW FRAME (RESTORED BUT FITTED) */
+.slider{
+  width:320px;
+  height:320px;
+  margin:30px auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:25px;
+  box-shadow:0 0 40px #ff4dd2,0 0 80px #ff1ac6;
   border:3px solid #ff66e0;
+  background:rgba(0,0,0,.4);
 }
 
-/* 💍 SECRET BUTTON */
+.slides{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* 📸 PERFECT FIT INSIDE GLOW */
+.slides img{
+  position:absolute;
+  max-width:92%;      /* keeps inside glow */
+  max-height:92%;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  object-position:center;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  opacity:0;
+  transition:opacity 1s ease;
+}
+
+.slides img.active{opacity:1}
+
+/* 💍 BUTTONS */
 #marryBtn{
   display:none;
-  margin-top:25px;
-  padding:12px 28px;
-  font-size:1.1rem;
+  margin-top:15px;
+  padding:12px 26px;
   border:none;
-  border-radius:30px;
-  background:linear-gradient(45deg,#ffd700,#ff9a00);
+  border-radius:25px;
+  background:gold;
   cursor:pointer;
-  box-shadow:0 0 25px gold;
+  font-size:1.1rem;
 }
 
-#backBtn{
+#backBtn,#backBtn2{
   display:block;
-  margin:20px auto 0;
-  padding:10px 20px;
+  margin:12px auto 0;
+  padding:8px 18px;
   border:none;
   border-radius:20px;
   background:#222;
   color:#fff;
-  cursor:pointer;
 }
 
-@keyframes fadeIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+/* 💋 KISS FRAME GLOW */
+#kissFrame{
+  width:320px;
+  height:320px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:25px;
+  box-shadow:0 0 40px #ff4dd2,0 0 80px #ff1ac6;
+  border:3px solid #ff66e0;
+  margin:25px auto 0;
+  background:rgba(0,0,0,.4);
+}
 
-canvas{
-  position:fixed;
-  top:0;
-  left:0;
-  pointer-events:none;
+#kissImg{
+  max-width:92%;
+  max-height:92%;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+}
+
+/* 💋 TEXT */
+#kissMsg{
+  font-size:2.2rem;
+  margin-top:22px;
+  color:#ffd6f7;
+  text-shadow:
+    0 0 10px #ff4dd2,
+    0 0 20px #ff1ac6,
+    0 0 40px #ff66e0;
 }
 
 </style>
@@ -170,7 +181,6 @@ canvas{
 <body>
 
 <div class="stars"></div>
-<canvas id="fireworks"></canvas>
 
 <audio autoplay loop>
   <source src="TumMile.mp3" type="audio/mpeg">
@@ -181,39 +191,56 @@ canvas{
 <button id="yesBtn" class="btn">Yes ❤️</button>
 <button id="noBtn" class="btn">No 💔</button>
 
+<!-- 💖 FINAL -->
 <div id="finalScreen">
-  <h2>Thank You For Being My Valentine 💖</h2>
+<h2>Thank You For Being My Valentine 💖</h2>
 
-  <p>
-    Thank you for being my Valentine for the 4th time since our relationship ❤️
-    <br><br>
-    With every heartbeat, my love for you grows stronger.
-    You are the reason my world feels brighter,
-    my nights feel warmer, and my life feels complete.
-    <br><br>
-    Loving you is my favorite journey…
-    and I want to walk every lifetime with you.
-    <br><br>
-    Here’s to us, our memories, and
-    a forever still waiting to unfold ✨💍
-  </p>
+<p>
+Thank you for being my Valentine for the 4th time since our relationship ❤️<br><br>
+From the day you walked into my life, my world started shining brighter than the stars above.<br><br>
+Your smile became my peace, your voice my favorite melody, and your love my greatest blessing.<br><br>
+No matter how many lifetimes I get… I will always find my way back to you.<br><br>
+I don’t just love you… I live for you 💞✨
+</p>
 
-  <img id="coupleImg" src="couple.jpeg" />
+<div class="slider">
+  <div class="slides" id="slides">
+    <img src="couple1.jpeg" class="active">
+    <img src="couple2.jpeg">
+    <img src="couple3.jpeg">
+    <img src="couple4.jpeg">
+    <img src="couple5.jpeg">
+    <img src="couple6.jpeg">
+    <img src="couple7.jpeg">
+  </div>
+</div>
 
-  <button id="marryBtn">💍 Marry Me Next?</button>
-  <button id="backBtn">⬅ Back</button>
+<button id="marryBtn">💍 Marry Me Next?</button>
+<button id="backBtn">⬅ Back</button>
+</div>
+
+<!-- 💋 -->
+<div id="marryScreen">
+<h2>Forever With You 💍</h2>
+
+<div id="kissFrame">
+  <img id="kissImg" src="kissing.jpeg" />
+</div>
+
+<div id="kissMsg">Veryyyyy Veryyyyy Soon Bubbyy 💖</div>
+<button id="backBtn2">⬅ Back</button>
 </div>
 
 <script>
 
-/* NO MOVE */
+/* NO BUTTON MOVE */
 const noBtn=document.getElementById('noBtn');
-noBtn.addEventListener('mouseenter',()=>{
-  noBtn.style.top=Math.random()*80+'%';
-  noBtn.style.left=Math.random()*80+'%';
+noBtn.addEventListener('mouseover',()=>{
+ noBtn.style.top=Math.random()*80+'%';
+ noBtn.style.left=Math.random()*80+'%';
 });
 
-/* YES CLICK */
+/* YES */
 const yesBtn=document.getElementById('yesBtn');
 const finalScreen=document.getElementById('finalScreen');
 
@@ -223,57 +250,24 @@ yesBtn.onclick=()=>{
  noBtn.style.display='none';
  finalScreen.style.display='block';
  document.getElementById('marryBtn').style.display='inline-block';
- startFireworks();
 };
 
-/* BACK */
+/* 💍 */
+const marryBtn=document.getElementById('marryBtn');
+const marryScreen=document.getElementById('marryScreen');
+marryBtn.onclick=()=>{finalScreen.style.display='none';marryScreen.style.display='block'};
+
 document.getElementById('backBtn').onclick=()=>location.reload();
+document.getElementById('backBtn2').onclick=()=>{marryScreen.style.display='none';finalScreen.style.display='block'};
 
-/* EMOJIS */
-const emojis=['❤️','💖','💘','💝','💕','💗','💓','💞','😍','🥰'];
+/* 🔄 SLIDER */
+const imgs=document.querySelectorAll('#slides img');
+let idx=0;
 setInterval(()=>{
- let e=document.createElement('div');
- e.className='emoji';
- e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
- e.style.left=Math.random()*100+'vw';
- e.style.animationDuration=(Math.random()*3+3)+'s';
- document.body.appendChild(e);
- setTimeout(()=>e.remove(),6000);
-},400);
-
-/* FIREWORKS */
-function startFireworks(){
-const canvas=document.getElementById('fireworks');
-const ctx=canvas.getContext('2d');
-canvas.width=innerWidth;
-canvas.height=innerHeight;
-let particles=[];
-
-function boom(){
- let x=Math.random()*canvas.width;
- let y=Math.random()*canvas.height/2;
- for(let i=0;i<80;i++){
-  particles.push({x,y,angle:Math.random()*6.28,speed:Math.random()*5+2,life:100});
- }
-}
-
-function animate(){
- ctx.fillStyle='rgba(0,0,0,.2)';
- ctx.fillRect(0,0,canvas.width,canvas.height);
- particles.forEach((p,i)=>{
-  p.x+=Math.cos(p.angle)*p.speed;
-  p.y+=Math.sin(p.angle)*p.speed;
-  p.life--;
-  ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
-  ctx.fillRect(p.x,p.y,3,3);
-  if(p.life<=0)particles.splice(i,1);
- });
- requestAnimationFrame(animate);
-}
-
-setInterval(boom,800);
-animate();
-}
+ imgs[idx].classList.remove('active');
+ idx=(idx+1)%imgs.length;
+ imgs[idx].classList.add('active');
+},2500);
 
 </script>
 
